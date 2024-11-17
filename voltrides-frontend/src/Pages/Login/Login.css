@@ -1,99 +1,98 @@
 .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
-  .tabs button {
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background-color: #eee;
-  }
-  
-  .tabs button.active {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form input {
-    margin-bottom: 10px;
-    padding: 8px;
-    font-size: 16px;
-  }
-  
-  .error-message {
-    color: red;
-    margin-bottom: 10px;
-  }
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
 
-  .password-checklist {
-    margin-top: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .password-checklist p {
-    margin: 5px 0;
-  }
-  
-  .valid {
-    color: green;
-  }
-  
-  .invalid {
-    color: red;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  .password-input {
-    position: relative;
-    margin-bottom: 10px;
-  }
-  
-  .password-input input {
-    width: 100%;
-    padding-right: 40px;
-  }
-  
-  .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .valid {
-    color: green;
-  }
-  
-  .invalid {
-    color: red;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #eee;
+}
+
+.tabs button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.password-checklist {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.password-checklist p {
+  margin: 5px 0;
+}
+
+.valid {
+  color: green;
+}
+
+.invalid {
+  color: red;
+}
+
+.password-input {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 40px; /* Leave space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 24px; /* Adjust icon size */
+  height: 24px; /* Adjust icon size */
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}

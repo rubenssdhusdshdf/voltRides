@@ -8,7 +8,7 @@ import Footer from './Components/Footer/Footer';
 import Login from './Pages/Login/Login';
 import BikesAvailable from './Pages/BikesAvailable/BikesAvailable';
 import RentMyBike from './Pages/RentBike/RentBike';
-import { fetchHello } from './Services/api';
+import { fetchHello } from './Services/api.js';
 import './App.css';
 
 function App() {
