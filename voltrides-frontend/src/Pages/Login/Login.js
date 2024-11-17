@@ -1,102 +1,153 @@
 import React, { useState } from 'react';
-import './Login.css';
+import '../Login/Login.css';
+import noPasswordIcon from '../../Assets/Icons/no-password.svg';
+import seePasswordIcon from '../../Assets/Icons/see-password.svg';
 
 const Login = () => {
-  const [activeTab, setActiveTab] = useState('signIn');
-  const [signInData, setSignInData] = useState({ username: '', password: '' });
-  const [signUpData, setSignUpData] = useState({ username: '', password: '', confirmPassword: '' });
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSignInChange = (e) => {
-    const { name, value } = e.target;
-    setSignInData({ ...signInData, [name]: value });
+  const handleSignInClick = () => {
+    setIsSignIn(true);
+    clearFields();
   };
 
-  const handleSignUpChange = (e) => {
-    const { name, value } = e.target;
-    setSignUpData({ ...signUpData, [name]: value });
+  const handleSignUpClick = () => {
+    setIsSignIn(false);
+    clearFields();
+  };
+
+  const clearFields = () => {
+    setUsername('');
+    setPassword('');
+    setConfirmPassword('');
+    setErrorMessage('');
+  };
+
+  const validatePassword = (password) => {
+    return {
+      lengthCheck: password.length >= 7,
+      specialCharCheck: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      upperCaseCheck: /[A-Z]/.test(password),
+      lowerCaseCheck: /[a-z]/.test(password),
+      numberCheck: /[0-9]/.test(password),
+    };
+  };
+
+  const passwordCriteria = validatePassword(password);
+
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    if (!Object.values(passwordCriteria).every(Boolean)) {
+      setErrorMessage('Password does not meet all criteria');
+      return;
+    }
+
+    setErrorMessage('');
+    console.log('Sign up successful:', { username, password });
   };
 
   const handleSignInSubmit = (e) => {
     e.preventDefault();
-    console.log('Sign In Data:', signInData);
+    console.log('Sign in successful:', { username, password });
   };
 
-  const handleSignUpSubmit = (e) => {
-    e.preventDefault();
-    if (signUpData.password !== signUpData.confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-    console.log('Sign Up Data:', signUpData);
-  };
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <div className="login-container">
       <div className="tabs">
-        <button 
-          className={activeTab === 'signIn' ? 'active' : ''}
-          onClick={() => setActiveTab('signIn')}
-        >
+        <button className={isSignIn ? 'active' : ''} onClick={handleSignInClick}>
           Sign In
         </button>
-        <button 
-          className={activeTab === 'signUp' ? 'active' : ''}
-          onClick={() => setActiveTab('signUp')}
-        >
+        <button className={!isSignIn ? 'active' : ''} onClick={handleSignUpClick}>
           Sign Up
         </button>
       </div>
 
-      {activeTab === 'signIn' && (
-        <form onSubmit={handleSignInSubmit} className="form">
+      {isSignIn ? (
+        <form className="form" onSubmit={handleSignInSubmit}>
           <h2>Sign In</h2>
           <input
             type="text"
-            name="username"
             placeholder="Username"
-            value={signInData.username}
-            onChange={handleSignInChange}
-            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={signInData.password}
-            onChange={handleSignInChange}
-            required
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <img
+              src={showPassword ? seePasswordIcon : noPasswordIcon}
+              alt="Toggle Password"
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            />
+          </div>
           <button type="submit">Sign In</button>
         </form>
-      )}
-
-      {activeTab === 'signUp' && (
-        <form onSubmit={handleSignUpSubmit} className="form">
+      ) : (
+        <form className="form" onSubmit={handleSignUpSubmit}>
           <h2>Sign Up</h2>
           <input
             type="text"
-            name="username"
             placeholder="Username"
-            value={signUpData.username}
-            onChange={handleSignUpChange}
-            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={signUpData.password}
-            onChange={handleSignUpChange}
-            required
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={signUpData.confirmPassword}
-            onChange={handleSignUpChange}
-            required
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <img
+              src={showPassword ? seePasswordIcon : noPasswordIcon}
+              alt="Toggle Password"
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            />
+          </div>
+          <div className="password-input">
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <img
+              src={showConfirmPassword ? seePasswordIcon : noPasswordIcon}
+              alt="Toggle Confirm Password"
+              className="toggle-password"
+              onClick={toggleConfirmPasswordVisibility}
+            />
+          </div>
+
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <div className="password-checklist">
+            <p className={passwordCriteria.lengthCheck ? 'valid' : 'invalid'}>• At least 7 characters</p>
+            <p className={passwordCriteria.specialCharCheck ? 'valid' : 'invalid'}>• At least one special character</p>
+            <p className={passwordCriteria.upperCaseCheck ? 'valid' : 'invalid'}>• At least one uppercase letter</p>
+            <p className={passwordCriteria.lowerCaseCheck ? 'valid' : 'invalid'}>• At least one lowercase letter</p>
+            <p className={passwordCriteria.numberCheck ? 'valid' : 'invalid'}>• At least one number</p>
+          </div>
           <button type="submit">Sign Up</button>
         </form>
       )}
