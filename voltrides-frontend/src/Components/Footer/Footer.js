@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import electricBikeLogo from '../Assets/Icons/electric-bike.svg';
+import electricBikeLogo from '../../Assets/Icons/electric-bike.svg';
 
 const Footer = () => {
   return (

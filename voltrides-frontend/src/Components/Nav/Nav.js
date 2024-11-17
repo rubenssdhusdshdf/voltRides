@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Nav.css'; // Import the CSS file for styling
-import bikeIcon from '../Assets/Icons/electric-bike.svg'; // Your bike logo path
-import menuIcon from '../Assets/Icons/menu.svg'; // Your menu icon path
+import bikeIcon from '../../Assets/Icons/electric-bike.svg'; // Your bike logo path
+import menuIcon from '../../Assets/Icons/menu.svg'; // Your menu icon path
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -1,43 +1,66 @@
 import React, { useEffect, useState } from 'react';
-import Nav from './Nav/Nav.js'; // Navigation bar component
-import HeroLanding from './HeroLanding/HeroLanding.js'; // Hero section component
-import NewModels from './NewModels/NewModels.js'; // New Models section component
-import HowWorks from './HowWorks/HowWorks.js'; // How it Works section component
-import Footer from './Footer/Footer.js'; // Footer component
-import { fetchHello } from './Services/api.js';
-import './App.css'; // Global styles
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Nav from './Components/Nav/Nav';
+import HeroLanding from './Components/HeroLanding/HeroLanding';
+import NewModels from './Components/NewModels/NewModels';
+import HowWorks from './Components/HowWorks/HowWorks';
+import Footer from './Components/Footer/Footer';
+import Login from './Pages/Login/Login';
+import BikesAvailable from './Pages/BikesAvailable/BikesAvailable';
+import RentMyBike from './Pages/RentBike/RentBike';
+import { fetchHello } from './Services/api';
+import './App.css';
 
 function App() {
   const [message, setMessage] = useState('');
 
-  // Fetch data from the backend when the component mounts
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchHello(); // Fetch data from API
-        setMessage(data); // Store response in state
+        const data = await fetchHello();
+        setMessage(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    getData(); // Invoke the function
+    getData();
   }, []);
 
   return (
-    <div className="App">
-      
-      <Nav />
-      <HeroLanding />
-      <NewModels />
-      <HowWorks />
-      <Footer />
+    <Router>
+      <div className="App">
+        <Nav />
+        <Routes>
+          {/* Route for the landing page */}
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroLanding />
+                <NewModels />
+                <HowWorks />
+                <Footer />
+              </>
+            }
+          />
 
-      {/* Debug Message */}
-      <main>
-        <p>{message ? message : 'Loading...'}</p>
-      </main>
-    </div>
+          {/* Route for the Login page */}
+          <Route path="/login" element={<Login />} />
+
+          {/* Route for the Bikes Available page */}
+          <Route path="/bikes-available" element={<BikesAvailable />} />
+
+          {/* Route for the Rent My Bike page */}
+          <Route path="/rent-my-bike" element={<RentMyBike />} />
+        </Routes>
+
+        {/* Display a message from the backend, if available */}
+        <main>
+          {message && <p>{message}</p>}
+        </main>
+      </div>
+    </Router>
   );
 }
 
