@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Nav.css';
-import bikeIcon from '../../Assets/Icons/electric-bike.svg';
-import menuIcon from '../../Assets/Icons/menu.svg';
+import './Nav.css'; // Import the CSS file for styling
+import bikeIcon from '../../Assets/Icons/electric-bike.svg'; // Your bike logo path
+import menuIcon from '../../Assets/Icons/menu.svg'; // Your menu icon path
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Handle window resize to check if it's mobile view
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
   };
+
+  // Simulating logged-in state from localStorage (or you can use context/state)
+  useEffect(() => {
+    const userLoggedIn = localStorage.getItem('isLoggedIn'); // Example check
+    setIsLoggedIn(!!userLoggedIn); // Convert to boolean
+  }, []);
 
   // Add event listener on component mount and remove on unmount
   useEffect(() => {
@@ -29,9 +35,7 @@ const Nav = () => {
       <nav className="nav-bar">
         {/* Bike Icon */}
         <div className="nav-icon">
-          <Link to="/">
-            <img src={bikeIcon} alt="Bike" className="icon" />
-          </Link>
+          <img src={bikeIcon} alt="Bike" className="icon" />
         </div>
 
         {/* Conditional rendering: mobile or desktop menu */}
@@ -43,9 +47,14 @@ const Nav = () => {
         ) : (
           // Horizontal menu for desktop
           <ul className="desktop-menu">
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/bikes-available">Bikes Available</Link></li>
-            <li><Link to="/rent-my-bike">Rent My Bike</Link></li>
+            <li><a href="/bikes-available">Bikes Available</a></li>
+            <li><a href="/rent-my-bike">Rent My Bike</a></li>
+            {/* Conditional Login/MyProfile link */}
+            {isLoggedIn ? (
+              <li><a href="/profile">My Profile</a></li>
+            ) : (
+              <li><a href="/login">Login</a></li>
+            )}
           </ul>
         )}
       </nav>
@@ -55,9 +64,19 @@ const Nav = () => {
         <div className="full-screen-menu">
           <div className="menu-close" onClick={handleMenuToggle}>✖</div>
           <ul className="menu-list">
-            <li><Link to="/login" onClick={handleMenuToggle}>Login</Link></li>
-            <li><Link to="/bikes-available" onClick={handleMenuToggle}>Bikes Available</Link></li>
-            <li><Link to="/rent-my-bike" onClick={handleMenuToggle}>Rent My Bike</Link></li>
+            <li><a href="/bikes-available">Bikes Available</a></li>
+            <li><a href="/rent-my-bike">Rent My Bike</a></li>
+            {/* Conditional Login/MyProfile link */}
+            {isLoggedIn ? (
+              <li><a href="/profile">My Profile</a></li>
+            ) : (
+              <li><a href="/login">Login</a></li>
+            )}
+
+            <li>
+              {isLoggedIn ? <Link to="/profile">My Profile</Link> : <Link to="/login">Login</Link>}
+            </li>
+
           </ul>
         </div>
       )}

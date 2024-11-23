@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../Login/Login.css';
 import noPasswordIcon from '../../Assets/Icons/no-password.svg';
 import seePasswordIcon from '../../Assets/Icons/see-password.svg';
-import { signUpUser } from '../../Services/api.js';
+import { signUpUser, loginUser } from '../../Services/api.js';
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -12,7 +12,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const [passwordChecklist, setPasswordChecklist] = useState({
     length: false,
     uppercase: false,
@@ -22,25 +23,21 @@ const Login = () => {
     match: false,
   });
 
-  // Switch to Sign In tab
   const handleSignInClick = () => {
     setIsSignIn(true);
     clearFields();
   };
 
-  // Switch to Sign Up tab
   const handleSignUpClick = () => {
     setIsSignIn(false);
     clearFields();
   };
 
-  // Clear all input fields and messages
   const clearFields = () => {
     setUsername('');
     setPassword('');
     setConfirmPassword('');
     setErrorMessage('');
-    setSuccessMessage('');
     setPasswordChecklist({
       length: false,
       uppercase: false,
@@ -51,7 +48,6 @@ const Login = () => {
     });
   };
 
-  // Password validation function
   const validatePassword = (pass, confirmPass) => {
     const checklist = {
       length: pass.length >= 7,
@@ -76,22 +72,20 @@ const Login = () => {
     validatePassword(password, newConfirmPassword);
   };
 
-  // Handle Sign Up form submission
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all password requirements are met
     if (!passwordChecklist.match) {
       setErrorMessage('Passwords do not match');
       return;
     }
+
     if (!Object.values(passwordChecklist).every((check) => check)) {
       setErrorMessage('Please meet all password requirements');
       return;
     }
 
     setErrorMessage('');
-    setSuccessMessage('');
 
     const userData = {
       username: username.trim(),
@@ -103,13 +97,14 @@ const Login = () => {
 
       if (response.status === 200 || response.status === 201) {
         console.log('User registered successfully:', response.data);
-        setSuccessMessage('User registered successfully! Redirecting...');
+        setShowSuccessModal(true);
         clearFields();
 
-        // Automatically redirect to Sign In tab after 2 seconds
         setTimeout(() => {
-          setIsSignIn(true);
-        }, 2000);
+          setShowSuccessModal(false);
+          localStorage.setItem('isLoggedIn', true); // Mark user as logged in
+          window.location.href = '/';
+        }, 3000);
       } else {
         setErrorMessage('Failed to sign up. Please try again.');
       }
@@ -119,9 +114,41 @@ const Login = () => {
     }
   };
 
+  const handleSignInSubmit = async (e) => {
+    e.preventDefault();
+
+    const userData = {
+      username: username.trim(),
+      password: password,
+    };
+
+    try {
+      const response = await loginUser(userData);
+
+      if (response.status === 200) {
+        localStorage.setItem('isLoggedIn', true); // Mark user as logged in
+        window.location.href = '/';
+      } else {
+        setErrorMessage('Invalid username or password');
+      }
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      setErrorMessage('An error occurred during sign-in.');
+    }
+  };
+
   return (
     <div className="login-container">
-      <div className="tabs">
+      {showSuccessModal && (
+        <div className="success-modal">
+          <div className="success-message">
+            <h2>Congratulations!</h2>
+            <p>Your account has been successfully created!</p>
+          </div>
+        </div>
+      )}
+
+      <div className={`tabs ${showSuccessModal ? 'blur' : ''}`}>
         <button className={isSignIn ? 'active' : ''} onClick={handleSignInClick}>
           Sign In
         </button>
@@ -130,9 +157,8 @@ const Login = () => {
         </button>
       </div>
 
-      {/* Sign In Form */}
       {isSignIn ? (
-        <form className="form">
+        <form className={`form ${showSuccessModal ? 'blur' : ''}`} onSubmit={handleSignInSubmit}>
           <h2>Sign In</h2>
           <input
             type="text"
@@ -154,11 +180,11 @@ const Login = () => {
               onClick={() => setShowPassword(!showPassword)}
             />
           </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit">Sign In</button>
         </form>
       ) : (
-        // Sign Up Form
-        <form className="form" onSubmit={handleSignUpSubmit}>
+        <form className={`form ${showSuccessModal ? 'blur' : ''}`} onSubmit={handleSignUpSubmit}>
           <h2>Sign Up</h2>
           <input
             type="text"
@@ -205,7 +231,6 @@ const Login = () => {
           </div>
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
           <button type="submit">Sign Up</button>
         </form>
       )}
