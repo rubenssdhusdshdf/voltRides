@@ -1,0 +1,57 @@
+/* Section Styling */
+.how-works {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .how-works h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  
+  /* Accordion Styling */
+  .accordion {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .accordion-item {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .accordion-title {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .accordion-title:hover {
+    background-color: #0056b3;
+  }
+  
+  .accordion-content {
+    padding: 20px;
+    background-color: #e8f0fe;
+    color: #333;
+    display: none; /* Initially hidden, will toggle visibility with JavaScript */
+    border-top: 1px solid #007bff;
+  }
+  
+  /* Additional styling for open state */
+  .accordion-item.open .accordion-content {
+    display: block;
+  }
+  

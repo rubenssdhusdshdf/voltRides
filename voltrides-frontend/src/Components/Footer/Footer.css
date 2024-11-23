@@ -1,0 +1,101 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .footer {
+    background-color: #333; /* Dark background */
+    color: #fff;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  /* Footer Logo */
+  .footer-logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .bike-logo {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  /* Footer Menu */
+  .footer-menu {
+    flex: 2;
+    text-align: center;
+  }
+  
+  .footer-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-menu ul li {
+    display: inline-block;
+    margin: 0 15px;
+  }
+  
+  .footer-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-menu ul li a:hover {
+    color: #007bff;
+  }
+  
+  /* Social Media Icons */
+  .footer-social {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+  
+  .social-icon {
+    background-color: #555;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .footer-menu {
+      margin-top: 20px;
+    }
+  
+    .footer-social {
+      justify-content: center;
+      margin-top: 20px;
+    }
+  }
+  

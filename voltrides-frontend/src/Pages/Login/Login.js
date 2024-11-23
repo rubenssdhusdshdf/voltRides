@@ -4,7 +4,6 @@ import noPasswordIcon from '../../Assets/Icons/no-password.svg';
 import seePasswordIcon from '../../Assets/Icons/see-password.svg';
 import { signUpUser } from '../../Services/api.js';
 
-
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [username, setUsername] = useState('');
@@ -86,7 +85,6 @@ const Login = () => {
       setErrorMessage('Passwords do not match');
       return;
     }
-
     if (!Object.values(passwordChecklist).every((check) => check)) {
       setErrorMessage('Please meet all password requirements');
       return;
