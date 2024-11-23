@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './Nav/Nav.js'; // Navigation bar component
+import Login from './Pages/Login/Login.js' // Login page component
+import BikesAvailable from './Pages/BikesAvailable/BikesAvailable.js'; // Bikes available page component
+import Rent from './Pages/Rent/Rent.js'; // Rent my bike page component
 import HeroLanding from './HeroLanding/HeroLanding.js'; // Hero section component
 import NewModels from './NewModels/NewModels.js'; // New Models section component
 import HowWorks from './HowWorks/HowWorks.js'; // How it Works section component
@@ -25,19 +29,23 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      
-      <Nav />
-      <HeroLanding />
-      <NewModels />
-      <HowWorks />
-      <Footer />
+    <Router>
+      <div>
+        {/* Navigation bar displayed on all pages */}
+        <Nav />
 
-      {/* Debug Message */}
-      <main>
-        <p>{message ? message : 'Loading...'}</p>
-      </main>
-    </div>
+        {/* Routes for different pages */}
+        <Routes>
+          <Route path="/" element={<HeroLanding />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/bikes-available" element={<BikesAvailable />} />
+          <Route path="/rent" element={<Rent />} />
+        </Routes>
+
+        {/* Footer displayed on all pages */}
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
