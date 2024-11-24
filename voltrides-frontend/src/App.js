@@ -5,10 +5,11 @@ import HeroLanding from './Components/HeroLanding/HeroLanding';
 import NewModels from './Components/NewModels/NewModels.js';
 import HowWorks from './Components/HowWorks/HowWorks.js';
 import Footer from './Components/Footer/Footer';
-import Login from './Pages/Login/Login';
+import Login from './Pages/Login/Login.js';
 import BikesAvailable from './Pages/BikesAvailable/BikesAvailable';
 import Rent from './Pages/Rent/Rent.js';
-import { fetchHello } from './Services/api.js';
+import { fetchHello } from '../src/Services/api.js';
+
 import MyProfile from './Pages/MyProfile/MyProfile.js'
 import './App.css';
 

@@ -48,7 +48,7 @@ const Nav = () => {
           // Horizontal menu for desktop
           <ul className="desktop-menu">
             <li><a href="/bikes-available">Bikes Available</a></li>
-            <li><a href="/rent-my-bike">Rent My Bike</a></li>
+            <li><a href="/rent">Rent My Bike</a></li>
             {/* Conditional Login/MyProfile link */}
             {isLoggedIn ? (
               <li><a href="/profile">My Profile</a></li>
@@ -65,7 +65,7 @@ const Nav = () => {
           <div className="menu-close" onClick={handleMenuToggle}>✖</div>
           <ul className="menu-list">
             <li><a href="/bikes-available">Bikes Available</a></li>
-            <li><a href="/rent-my-bike">Rent My Bike</a></li>
+            <li><a href="/rent">Rent my bike</a></li>
             {/* Conditional Login/MyProfile link */}
             {isLoggedIn ? (
               <li><a href="/profile">My Profile</a></li>

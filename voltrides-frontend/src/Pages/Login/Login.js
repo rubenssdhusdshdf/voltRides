@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import '../Login/Login.css';
-import noPasswordIcon from '../../Assets/Icons/no-password.svg';
-import seePasswordIcon from '../../Assets/Icons/see-password.svg';
-import { signUpUser, loginUser } from '../../Services/api.js';
+import React, { useState } from "react";
+import "../Login/Login.css";
+import noPasswordIcon from "../../Assets/Icons/no-password.svg";
+import seePasswordIcon from "../../Assets/Icons/see-password.svg";
+import { loginUser, signUpUser } from "../../Services/api.js"; // Import API functions
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [passwordChecklist, setPasswordChecklist] = useState({
@@ -23,21 +24,12 @@ const Login = () => {
     match: false,
   });
 
-  const handleSignInClick = () => {
-    setIsSignIn(true);
-    clearFields();
-  };
-
-  const handleSignUpClick = () => {
-    setIsSignIn(false);
-    clearFields();
-  };
-
   const clearFields = () => {
-    setUsername('');
-    setPassword('');
-    setConfirmPassword('');
-    setErrorMessage('');
+    setUsername("");
+    setPassword("");
+    setConfirmPassword("");
+    setErrorMessage("");
+    setSuccessMessage("");
     setPasswordChecklist({
       length: false,
       uppercase: false,
@@ -48,6 +40,16 @@ const Login = () => {
     });
   };
 
+  const handleSignInClick = () => {
+    setIsSignIn(true);
+    clearFields();
+  };
+
+  const handleSignUpClick = () => {
+    setIsSignIn(false);
+    clearFields();
+  };
+
   const validatePassword = (pass, confirmPass) => {
     const checklist = {
       length: pass.length >= 7,
@@ -55,7 +57,7 @@ const Login = () => {
       lowercase: /[a-z]/.test(pass),
       specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(pass),
       number: /[0-9]/.test(pass),
-      match: pass === confirmPass && pass !== '',
+      match: pass === confirmPass && pass !== "",
     };
     setPasswordChecklist(checklist);
   };
@@ -76,16 +78,14 @@ const Login = () => {
     e.preventDefault();
 
     if (!passwordChecklist.match) {
-      setErrorMessage('Passwords do not match');
+      setErrorMessage("Passwords do not match");
       return;
     }
 
     if (!Object.values(passwordChecklist).every((check) => check)) {
-      setErrorMessage('Please meet all password requirements');
+      setErrorMessage("Please meet all password requirements");
       return;
     }
-
-    setErrorMessage('');
 
     const userData = {
       username: username.trim(),
@@ -96,44 +96,46 @@ const Login = () => {
       const response = await signUpUser(userData);
 
       if (response.status === 200 || response.status === 201) {
-        console.log('User registered successfully:', response.data);
+        setSuccessMessage("Account created successfully!");
         setShowSuccessModal(true);
         clearFields();
 
         setTimeout(() => {
           setShowSuccessModal(false);
-          localStorage.setItem('isLoggedIn', true); // Mark user as logged in
-          window.location.href = '/';
+          window.location.href = "/";
         }, 3000);
       } else {
-        setErrorMessage('Failed to sign up. Please try again.');
+        setErrorMessage("Failed to sign up. Please try again.");
       }
     } catch (error) {
-      console.error('Error during sign-up:', error);
-      setErrorMessage('An error occurred during sign-up.');
+      console.error("Error during sign-up:", error);
+      setErrorMessage("An error occurred during sign-up.");
     }
   };
 
-  const handleSignInSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
     const userData = {
       username: username.trim(),
-      password: password,
+      password: password.trim(),
     };
 
     try {
       const response = await loginUser(userData);
 
-      if (response.status === 200) {
-        localStorage.setItem('isLoggedIn', true); // Mark user as logged in
-        window.location.href = '/';
-      } else {
-        setErrorMessage('Invalid username or password');
+      if (response) {
+        setSuccessMessage("Login successful!");
+        setShowSuccessModal(true);
+
+        setTimeout(() => {
+          setShowSuccessModal(false);
+          window.location.href = "/dashboard"; // Redirect to dashboard/home
+        }, 3000);
       }
     } catch (error) {
-      console.error('Error during sign-in:', error);
-      setErrorMessage('An error occurred during sign-in.');
+      console.error("Login failed:", error);
+      setErrorMessage("Invalid username or password.");
     }
   };
 
@@ -142,36 +144,42 @@ const Login = () => {
       {showSuccessModal && (
         <div className="success-modal">
           <div className="success-message">
-            <h2>Congratulations!</h2>
-            <p>Your account has been successfully created!</p>
+            <h2>{isSignIn ? "Welcome!" : "Congratulations!"}</h2>
+            <p>
+              {isSignIn
+                ? "You have successfully logged in!"
+                : "Your account has been successfully created!"}
+            </p>
           </div>
         </div>
       )}
 
-      <div className={`tabs ${showSuccessModal ? 'blur' : ''}`}>
-        <button className={isSignIn ? 'active' : ''} onClick={handleSignInClick}>
+      <div className={`tabs ${showSuccessModal ? "blur" : ""}`}>
+        <button className={isSignIn ? "active" : ""} onClick={handleSignInClick}>
           Sign In
         </button>
-        <button className={!isSignIn ? 'active' : ''} onClick={handleSignUpClick}>
+        <button className={!isSignIn ? "active" : ""} onClick={handleSignUpClick}>
           Sign Up
         </button>
       </div>
 
       {isSignIn ? (
-        <form className={`form ${showSuccessModal ? 'blur' : ''}`} onSubmit={handleSignInSubmit}>
+        <form className={`form ${showSuccessModal ? "blur" : ""}`} onSubmit={handleLoginSubmit}>
           <h2>Sign In</h2>
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <img
               src={showPassword ? seePasswordIcon : noPasswordIcon}
@@ -184,20 +192,22 @@ const Login = () => {
           <button type="submit">Sign In</button>
         </form>
       ) : (
-        <form className={`form ${showSuccessModal ? 'blur' : ''}`} onSubmit={handleSignUpSubmit}>
+        <form className={`form ${showSuccessModal ? "blur" : ""}`} onSubmit={handleSignUpSubmit}>
           <h2>Sign Up</h2>
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={handlePasswordChange}
+              required
             />
             <img
               src={showPassword ? seePasswordIcon : noPasswordIcon}
@@ -208,10 +218,11 @@ const Login = () => {
           </div>
           <div className="password-input">
             <input
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
+              required
             />
             <img
               src={showConfirmPassword ? seePasswordIcon : noPasswordIcon}
@@ -220,16 +231,14 @@ const Login = () => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             />
           </div>
-
           <div className="password-checklist">
-            <p className={passwordChecklist.length ? 'valid' : 'invalid'}>At least 7 characters</p>
-            <p className={passwordChecklist.uppercase ? 'valid' : 'invalid'}>One uppercase letter</p>
-            <p className={passwordChecklist.lowercase ? 'valid' : 'invalid'}>One lowercase letter</p>
-            <p className={passwordChecklist.specialChar ? 'valid' : 'invalid'}>One special character</p>
-            <p className={passwordChecklist.number ? 'valid' : 'invalid'}>One number</p>
-            <p className={passwordChecklist.match ? 'valid' : 'invalid'}>Passwords match</p>
+            <p className={passwordChecklist.length ? "valid" : "invalid"}>At least 7 characters</p>
+            <p className={passwordChecklist.uppercase ? "valid" : "invalid"}>One uppercase letter</p>
+            <p className={passwordChecklist.lowercase ? "valid" : "invalid"}>One lowercase letter</p>
+            <p className={passwordChecklist.specialChar ? "valid" : "invalid"}>One special character</p>
+            <p className={passwordChecklist.number ? "valid" : "invalid"}>One number</p>
+            <p className={passwordChecklist.match ? "valid" : "invalid"}>Passwords match</p>
           </div>
-
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit">Sign Up</button>
         </form>
