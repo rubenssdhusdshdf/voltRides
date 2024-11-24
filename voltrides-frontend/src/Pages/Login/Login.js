@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../Login/Login.css";
 import noPasswordIcon from "../../Assets/Icons/no-password.svg";
 import seePasswordIcon from "../../Assets/Icons/see-password.svg";
-import { loginUser, signUpUser } from "../../Services/api.js"; // Import API functions
+import { loginUser, signUpUser } from "../../Services/api.js";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -95,17 +95,12 @@ const Login = () => {
     try {
       const response = await signUpUser(userData);
 
-      if (response.status === 200 || response.status === 201) {
-        setSuccessMessage("Account created successfully!");
+      if (response === "User registered successfully!") {
+        setSuccessMessage("Congrats! Your account has been successfully created.");
         setShowSuccessModal(true);
         clearFields();
-
-        setTimeout(() => {
-          setShowSuccessModal(false);
-          window.location.href = "/";
-        }, 3000);
       } else {
-        setErrorMessage("Failed to sign up. Please try again.");
+        setErrorMessage("Failed to sign up. Username might already exist.");
       }
     } catch (error) {
       console.error("Error during sign-up:", error);
@@ -139,17 +134,18 @@ const Login = () => {
     }
   };
 
+  const closeModal = () => {
+    setShowSuccessModal(false);
+  };
+
   return (
     <div className="login-container">
       {showSuccessModal && (
         <div className="success-modal">
           <div className="success-message">
             <h2>{isSignIn ? "Welcome!" : "Congratulations!"}</h2>
-            <p>
-              {isSignIn
-                ? "You have successfully logged in!"
-                : "Your account has been successfully created!"}
-            </p>
+            <p>You have created your account sucesfully! </p>
+            <button onClick={closeModal}>Close</button>
           </div>
         </div>
       )}

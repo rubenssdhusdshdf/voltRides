@@ -28,13 +28,16 @@ export const fetchHello = async () => {
  */
 export const signUpUser = async (userData) => {
   try {
-    const response = await api.post('/api/signup', userData);
-    return response.data;
+      const response = await api.post('/api/signup', userData);
+
+      // Return the response data (message from the backend)
+      return response.data; // "User registered successfully!" or "User registration failed."
   } catch (error) {
-    console.error("Error signing up user:", error);
-    throw error;
+      console.error("Error signing up user:", error.response || error);
+      throw error;
   }
 };
+
 
 /**
  * Log in a user
