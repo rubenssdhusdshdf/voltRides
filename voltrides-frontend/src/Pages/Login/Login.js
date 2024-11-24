@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../Login/Login.css";
 import noPasswordIcon from "../../Assets/Icons/no-password.svg";
 import seePasswordIcon from "../../Assets/Icons/see-password.svg";
-import { loginUser, signUpUser } from "../../Services/api.js";
+import { loginUser, signUpUser } from "../../Services/api.js"; // Import API functions
 
 const Login = () => {
+  const navigate = useNavigate(); // React Router hook for navigation
   const [isSignIn, setIsSignIn] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -96,11 +98,15 @@ const Login = () => {
       const response = await signUpUser(userData);
 
       if (response === "User registered successfully!") {
-        setSuccessMessage("Congrats! Your account has been successfully created.");
+        setSuccessMessage("Congrats, you have created a new user!");
         setShowSuccessModal(true);
-        clearFields();
+
+        // Redirect to the homepage after a short delay and pass state
+        setTimeout(() => {
+          navigate("/", { state: { loggedIn: true, showProfile: true } });
+        }, 3000);
       } else {
-        setErrorMessage("Failed to sign up. Username might already exist.");
+        setErrorMessage("Failed to sign up. Please try again.");
       }
     } catch (error) {
       console.error("Error during sign-up:", error);
@@ -123,9 +129,9 @@ const Login = () => {
         setSuccessMessage("Login successful!");
         setShowSuccessModal(true);
 
+        // Redirect to the homepage after a short delay and pass state
         setTimeout(() => {
-          setShowSuccessModal(false);
-          window.location.href = "/dashboard"; // Redirect to dashboard/home
+          navigate("/", { state: { loggedIn: true, showProfile: true } });
         }, 3000);
       }
     } catch (error) {
@@ -134,18 +140,17 @@ const Login = () => {
     }
   };
 
-  const closeModal = () => {
-    setShowSuccessModal(false);
-  };
-
   return (
     <div className="login-container">
       {showSuccessModal && (
         <div className="success-modal">
           <div className="success-message">
             <h2>{isSignIn ? "Welcome!" : "Congratulations!"}</h2>
-            <p>You have created your account sucesfully! </p>
-            <button onClick={closeModal}>Close</button>
+            <p>
+              {isSignIn
+                ? "You have successfully logged in!"
+                : "Your account has been successfully created!"}
+            </p>
           </div>
         </div>
       )}
