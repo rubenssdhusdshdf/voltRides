@@ -118,27 +118,30 @@ const Login = () => {
     e.preventDefault();
 
     const userData = {
-      username: username.trim(),
-      password: password.trim(),
+        username: username.trim(),
+        password: password.trim(),
     };
 
     try {
-      const response = await loginUser(userData);
+        const response = await loginUser(userData);
 
-      if (response) {
-        setSuccessMessage("Login successful!");
-        setShowSuccessModal(true);
+        if (response === "Login successful!") {
+            setSuccessMessage("Welcome back!");
+            setShowSuccessModal(true);
 
-        // Redirect to the homepage after a short delay and pass state
-        setTimeout(() => {
-          navigate("/", { state: { loggedIn: true, showProfile: true } });
-        }, 3000);
-      }
+            // Redirect to homepage after a short delay
+            setTimeout(() => {
+                setShowSuccessModal(false);
+                window.location.href = "/";
+            }, 2000);
+        } else {
+            setErrorMessage(response || "Invalid username or password.");
+        }
     } catch (error) {
-      console.error("Login failed:", error);
-      setErrorMessage("Invalid username or password.");
+        console.error("Login failed:", error);
+        setErrorMessage("An error occurred while trying to log in.");
     }
-  };
+};
 
   return (
     <div className="login-container">
