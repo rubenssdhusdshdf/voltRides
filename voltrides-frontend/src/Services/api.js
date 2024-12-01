@@ -6,7 +6,7 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json", // Set content type
   },
-  withCredentials: false, // Include credentials if required (e.g., cookies)
+  withCredentials: true, // Include credentials if required (e.g., cookies)
 });
 
 export default api;
@@ -21,6 +21,21 @@ export const fetchHello = async () => {
     throw error;
   }
 };
+
+/**
+ * Fetch new models from the backend
+ */
+export const getNewModels = async () => {
+  try {
+    const response = await api.get("/api/models");
+    return response.data; // Return the models data
+  } catch (error) {
+    console.error("Error fetching new models:", error);
+    throw error;
+  }
+};
+
+
 
 /**
  * Sign up a new user
@@ -39,17 +54,19 @@ export const signUpUser = async (userData) => {
 };
 
 
-/**
- * Log in a user
- * @param {Object} loginData - The user login data
- */
 export const loginUser = async (loginData) => {
   try {
     const response = await api.post('/api/auth/login', loginData);
-    return response.data;
+    return response.data; // "Login successful!" or error message
   } catch (error) {
-    console.error("Error logging in user:", error);
-    throw error;
+    if (error.response && error.response.status === 401) {
+      throw new Error("Invalid password.");
+    } else if (error.response && error.response.status === 404) {
+      throw new Error("User not found.");
+    } else {
+      console.error("Error logging in user:", error);
+      throw new Error("An error occurred while trying to log in.");
+    }
   }
 };
 
@@ -64,5 +81,18 @@ export const submitBikeData = async (bikeData) => {
   } catch (error) {
     console.error("Error submitting bike data:", error);
     throw error; // Re-throw the error to handle it in the calling component
+  }
+};
+
+/**
+ * Fetch all bikes from the backend
+ */
+export const getAllBikes = async () => {
+  try {
+    const response = await api.get("/api/bikes");
+    return response.data; // Return all bikes
+  } catch (error) {
+    console.error("Error fetching all bikes:", error);
+    throw error;
   }
 };

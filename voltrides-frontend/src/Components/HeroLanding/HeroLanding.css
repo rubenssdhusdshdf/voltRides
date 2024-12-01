@@ -48,31 +48,33 @@
   z-index: 2; /* Ensure content is above both the overlay and the background */
   max-width: 800px;
   text-align: center;
-  color: white;
+  color: var(--light-gray);
 }
 
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 20px;
+  color: var(--light-gray);
 }
 
 .hero-content p {
   font-size: 1.5rem;
   margin-bottom: 30px;
+  color: var(--light-gray)
 }
 
 .cta-button {
   display: inline-block;
   padding: 12px 24px;
   font-size: 1.2rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black button */
+  color: var(--light-gray);
+  background-color: var(--dark-gray); 
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .cta-button:hover {
-  background-color: rgba(0, 0, 0, 1); /* Darker on hover */
+  background-color: var(--eco-green); /* Darker on hover */
   transform: scale(1.05); /* Slight zoom on hover */
 }

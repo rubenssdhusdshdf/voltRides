@@ -110,35 +110,45 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error during sign-up:", error);
-      setErrorMessage("An error occurred during sign-up.");
+      setErrorMessage(error.response?.data || "An error occurred during sign-up.");
     }
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
+  
     const userData = {
       username: username.trim(),
       password: password.trim(),
     };
-
+  
     try {
       const response = await loginUser(userData);
-
-      if (response) {
-        setSuccessMessage("Login successful!");
+  
+      if (response === "Login successful!") {
+        setSuccessMessage("Welcome back!");
         setShowSuccessModal(true);
-
-        // Redirect to the homepage after a short delay and pass state
+  
+        // Save login state in localStorage
+        localStorage.setItem("isLoggedIn", "true");
+  
+        // Save username for profile
+        localStorage.setItem("username", username);
+  
+        // Redirect to the profile page
         setTimeout(() => {
-          navigate("/", { state: { loggedIn: true, showProfile: true } });
-        }, 3000);
+          setShowSuccessModal(false);
+          navigate("/profile"); // Redirect to MyProfile
+        }, 2000);
+      } else {
+        setErrorMessage(response || "Invalid username or password.");
       }
     } catch (error) {
       console.error("Login failed:", error);
-      setErrorMessage("Invalid username or password.");
+      setErrorMessage(error.response?.data || "An error occurred while trying to log in.");
     }
   };
+  
 
   return (
     <div className="login-container">

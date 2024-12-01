@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './Components/Nav/Nav';
-import HeroLanding from './Components/HeroLanding/HeroLanding';
-import NewModels from './Components/NewModels/NewModels.js';
-import HowWorks from './Components/HowWorks/HowWorks.js';
 import Footer from './Components/Footer/Footer';
 import Login from './Pages/Login/Login.js';
+import Home from './Pages/Home/Home.js'
+import HeroLanding from './Components/HeroLanding/HeroLanding.js';
+
 import BikesAvailable from './Pages/BikesAvailable/BikesAvailable';
 import Rent from './Pages/Rent/Rent.js';
 import { fetchHello } from '../src/Services/api.js';
@@ -37,7 +37,7 @@ function App() {
 
         {/* Routes for different pages */}
         <Routes>
-          <Route path="/" element={<HeroLanding />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/bikes-available" element={<BikesAvailable />} />
           <Route path="/rent" element={<Rent />} />

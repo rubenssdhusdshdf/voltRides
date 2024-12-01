@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VoltridesApplication<Voltrides>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.voltrides.VoltridesApplication",
+            "projectName": "Voltrides",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
