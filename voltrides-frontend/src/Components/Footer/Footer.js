@@ -1,6 +1,10 @@
 import React from 'react';
 import './Footer.css';
 import electricBikeLogo from '../../Assets/Icons/electric-bike.svg';
+import facebook from '../../Assets/Icons/facebook.svg';
+import instagram from '../../Assets/Icons/instagram.svg';
+import whatsapp from '../../Assets/Icons/whatsapp.svg';
+import pinterest from '../../Assets/Icons/pinterest.svg';
 
 const Footer = () => {
   return (
@@ -21,10 +25,10 @@ const Footer = () => {
 
       {/* Social Media Icons */}
       <div className="footer-social">
-        <span className="social-icon">F</span> {/* Placeholder for Facebook */}
-        <span className="social-icon">I</span> {/* Placeholder for Instagram */}
-        <span className="social-icon">Y</span> {/* Placeholder for YouTube */}
-        <span className="social-icon">L</span> {/* Placeholder for LinkedIn */}
+        <img src={facebook} alt="facebook" className="facebook" />
+        <img src={instagram} alt="instagram" className="instagram" />
+        <img src={pinterest} alt="pinterest" className="pinterest" />
+        <img src={whatsapp} alt="whatsapp" className="whatsapp" />
       </div>
     </footer>
   );

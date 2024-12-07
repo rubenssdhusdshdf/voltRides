@@ -6,36 +6,26 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json", // Set content type
   },
-  withCredentials: true, // Include credentials if required (e.g., cookies)
+  withCredentials: true, // Include credentials if required
 });
 
 export default api;
 
-// Fetch /hello endpoint
-export const fetchHello = async () => {
-  try {
-    const response = await api.get('/hello');
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data from /hello endpoint:", error);
-    throw error;
-  }
-};
-
 /**
- * Fetch new models from the backend
+ * Login a user
+ * @param {Object} userData - The user data for login
  */
-export const getNewModels = async () => {
+export const loginUser = async (userData) => {
   try {
-    const response = await api.get("/api/models");
-    return response.data; // Return the models data
+    const response = await api.post('/api/auth/login', userData);
+    return response.data; // Return backend response (e.g., "Login successful.")
   } catch (error) {
-    console.error("Error fetching new models:", error);
-    throw error;
+    if (error.response) {
+      return error.response.data; // Return backend error message
+    }
+    throw error; // Re-throw unexpected errors
   }
 };
-
-
 
 /**
  * Sign up a new user
@@ -43,30 +33,13 @@ export const getNewModels = async () => {
  */
 export const signUpUser = async (userData) => {
   try {
-      const response = await api.post('/api/signup', userData);
-
-      // Return the response data (message from the backend)
-      return response.data; // "User registered successfully!" or "User registration failed."
+    const response = await api.post('/api/auth/register', userData);
+    return response.data; // Return the response message
   } catch (error) {
-      console.error("Error signing up user:", error.response || error);
-      throw error;
-  }
-};
-
-
-export const loginUser = async (loginData) => {
-  try {
-    const response = await api.post('/api/auth/login', loginData);
-    return response.data; // "Login successful!" or error message
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      throw new Error("Invalid password.");
-    } else if (error.response && error.response.status === 404) {
-      throw new Error("User not found.");
-    } else {
-      console.error("Error logging in user:", error);
-      throw new Error("An error occurred while trying to log in.");
+    if (error.response) {
+      return error.response.data; // Return backend error message
     }
+    throw error; // Re-throw unexpected errors
   }
 };
 
@@ -76,7 +49,7 @@ export const loginUser = async (loginData) => {
  */
 export const submitBikeData = async (bikeData) => {
   try {
-    const response = await api.post("/api/bikes", bikeData); // POST to /api/bikes
+    const response = await api.post("/api/bikes", bikeData);
     return response.data; // Return the response data
   } catch (error) {
     console.error("Error submitting bike data:", error);
@@ -96,3 +69,15 @@ export const getAllBikes = async () => {
     throw error;
   }
 };
+
+// Example implementation of getNewModels
+export const getNewModels = async () => {
+  try {
+    const response = await api.get('/api/models'); // Use the Axios instance
+    return response.data; // Return the models data
+  } catch (error) {
+    console.error("Error in getNewModels:", error);
+    throw error; // Re-throw the error for handling in the component
+  }
+};
+

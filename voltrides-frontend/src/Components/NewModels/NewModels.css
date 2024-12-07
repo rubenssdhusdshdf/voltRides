@@ -1,3 +1,12 @@
+:root {
+  --electric-blue: #0077CC;
+  --eco-green: #00B36B;
+  --dark-gray: #333333;
+  --light-gray: #F0F0F0;
+  --white: #FFFFFF;
+  --hover-blue: #0056b3;
+}
+
 /* General container styling */
 .container {
   max-width: 1200px;
@@ -17,7 +26,6 @@ h1 {
 /* Grid layout for the cards */
 .row {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
 }
@@ -49,7 +57,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #007bff;
+  color: var(--electric-blue);
 }
 
 /* Text styles */
@@ -63,7 +71,7 @@ h1 {
 .btn {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: var(--electric-blue);
   color: white;
   text-align: center;
   border: none;
@@ -74,7 +82,7 @@ h1 {
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: var(--hover-blue);
 }
 
 /* Responsive Design */
@@ -83,3 +91,31 @@ h1 {
     width: 100%; /* Full width on small screens */
   }
 }
+
+/* Ensure container centers its child (the button) */
+.cta-button-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically (if necessary) */
+  margin-top: 20px; /* Add spacing from the grid */
+  width: 100%; /* Ensure it spans the entire row width */
+}
+
+/* Style the button */
+.cta-button {
+  padding: 10px 20px;
+  background-color: var(--electric-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--eco-green);
+}
+
+
+

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../Rent/Rent.css";
-import { submitBikeData } from "../../Services/api.js"; // API function to submit bike data
+import { submitBikeData } from "../../Services/api.js"; 
+import Nav from "../../Components/Nav/Nav.js";
+import Footer from "../../Components/Footer/Footer.js";
 
 const BikeForm = () => {
   const [formData, setFormData] = useState({
@@ -90,6 +92,7 @@ const BikeForm = () => {
 
   return (
     <div>
+      <Nav />
       <form onSubmit={handleSubmit}>
         <h2>Rent My Bike</h2>
 
@@ -166,6 +169,7 @@ const BikeForm = () => {
           </div>
         </div>
       )}
+      < Footer />
     </div>
   );
 };

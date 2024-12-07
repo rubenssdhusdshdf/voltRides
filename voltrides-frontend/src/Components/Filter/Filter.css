@@ -1,0 +1,140 @@
+/* Wrapper for filter button and panel */
+.filter-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+  }
+  
+  /* Toggle Filter Button */
+  .toggle-filter-btn {
+    background-color: var(--electric-blue);
+    color: var(--white);
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: center;
+    width: 60px;
+    height: 100px;
+    position: absolute;
+    top: 20%;
+    transform: translateY(-50%);
+    z-index: 1001;
+  }
+  
+  /* Filter Container */
+  .filter-container {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: var(--light-gray);
+    padding: 15px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .filter-container.open {
+    left: 0;
+  }
+  
+  /* Filter Header with Close Button */
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .filter-header h3 {
+    margin: 0;
+    color: var(--dark-gray);
+  }
+  
+  .close-filter-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem; /* Smaller size */
+    color: var(--dark-gray);
+    cursor: pointer;
+    margin-left: auto;
+    padding: 5px;
+  }
+  
+  /* Filter Groups */
+  .filter-group {
+    margin-bottom: 20px;
+  }
+  
+  .filter-group h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--dark-gray);
+  }
+  
+  .filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+  }
+  
+  .filter-group input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Apply Filter Button */
+  .filter-apply-btn {
+
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+/* Filter Header with Close Button */
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .filter-header h3 {
+    margin: 0;
+    color: var(--dark-gray);
+  }
+  
+  .close-filter-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem; /* Appropriate size for the ✖ */
+    color: var(--dark-gray); /* Match the text color */
+    cursor: pointer;
+    padding: 0; /* Remove unnecessary padding */
+    width: auto; /* Minimal width */
+    height: auto; /* Minimal height */
+    line-height: 1; /* Ensures alignment with text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Prevent Hover Effects */
+  .close-filter-btn:hover {
+    color: var(--dark-gray); /* Keep the same color on hover */
+    background-color: transparent; /* No background on hover */
+  }
+  

@@ -1,109 +1,36 @@
-/* General container styling */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
 }
 
-/* Styling the heading */
-h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
+.page-btn {
+  color: var(--dark-gray);
+  border: 1px solid var(--dark-gray);
+  padding: 8px 12px;
+  margin: 0 2px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--light-gray);
 }
 
-/* General reset styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+.page-btn.active {
+  background-color: var(--light-gray); /* Always light gray for active */
+  color: var(--electric-blue); /* Highlight text in blue */
+  border: 2px solid var(--electric-blue); /* Blue border for active */
 }
 
-/* Wrapper to ensure the footer is pushed to the bottom */
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.page-btn:hover {
+  background-color: var(--hover-blue); /* Change background on hover */
+  color: var(--white);
 }
 
-/* Content area to fill the space between the header and footer */
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-
-/* Grid layout for the cards */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-/* Card container */
-.card {
-    background-color: #f8fafc; /* Subtle off-white */
-    border-radius: 12px;
-    overflow: hidden;
-    max-width: 340px;
-    width: 100%;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Card hover effect */
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* Card body */
-.card-body {
-    padding: 20px;
-    text-align: left;
-}
-
-/* Title styles */
-.card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #1a202c;
-}
-
-/* Text styles */
-.card-text {
-    font-size: 1rem;
-    color: #4a5568;
-    margin-bottom: 15px;
-    line-height: 1.6;
-}
-
-/* Button styles */
-.card .button {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #ffffff;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.card .button:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .card {
-        max-width: 100%;
-    }
+.page-btn.disabled {
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+  cursor: not-allowed;
+  border: 1px solid var(--dark-gray);
 }

@@ -1,14 +1,22 @@
+:root {
+  --electric-blue: #0077CC;
+  --eco-green: #00B36B;
+  --bright-yellow: #FFD700;
+  --dark-gray: #333333;
+  --light-gray: #F0F0F0;
+  --white: #FFFFFF;
+}
+
 /* Section Styling */
 .how-works {
     padding: 60px 20px;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9e3;
     text-align: center;
   }
   
   .how-works h2 {
     font-size: 2.5rem;
-    margin-bottom: 40px;
-    text-transform: uppercase;
+    margin-bottom: 40px; 
     color: #333;
   }
   
@@ -28,7 +36,7 @@
   .accordion-title {
     width: 100%;
     padding: 15px 20px;
-    background-color: #007bff;
+    background-color: var(--electric-blue);
     color: #fff;
     font-size: 1.2rem;
     text-align: left;
